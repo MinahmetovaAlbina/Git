@@ -1,127 +1,78 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using TestingRoom;
+using System.Diagnostics;
+using System.Drawing;
 
-namespace Rectangles
+namespace RefactorMe
 {
-    internal static class Program
+    class Risovatel
     {
-        /// <summary>
-        ///     The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main()
+        static Bitmap image = new Bitmap(800, 600);
+        static float x, y;
+        static Graphics graphics;
+
+        public static void Initialize()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestRoom(CreateTestCases()));
+            image = new Bitmap(800, 600);
+            graphics = Graphics.FromImage(image);
         }
 
-        private static IEnumerable<TestCase> CreateTestCases()
+        public static void SetPos(float x0, float y0)
         {
-            yield return new RectanglesTestRoomTestCase(new Rectangle(0, 0, 20, 20), new Rectangle(-20, -30, 20, 20),
-                false, 0, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(-90, -20, 180, 40),
-                new Rectangle(-20, -90, 40, 180), true, 1600, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(-90, -20, 180, 40), new Rectangle(-20, 0, 40, 90),
-                true, 800, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(-90, -20, 180, 40), new Rectangle(-20, 0, 40, 90),
-                true, 800, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(-90, -20, 180, 40), new Rectangle(-20, 0, 40, 90),
-                true, 800, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(-90, -20, 180, 40), new Rectangle(-20, 0, 40, 90),
-                true, 800, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(-90, -90, 100, 100),
-                new Rectangle(-10, -10, 100, 100), true, 400, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(-50, -50, 50, 50), new Rectangle(0, 0, 50, 50),
-                true, 0, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(-50, 0, 50, 50), new Rectangle(0, 0, 50, 50),
-                true, 0, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(-50, 0, 60, 60), new Rectangle(0, 0, 50, 50),
-                true, 500, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(20, 2, 40, 4), new Rectangle(10, 1, 0, 0), false,
-                0, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(20, 2, 40, 4), new Rectangle(10, 1, 20, 5), true,
-                40, -1);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(20, 2, 40, 4), new Rectangle(10, 1, 50, 5), true,
-                160, 0);
-            yield return new RectanglesTestRoomTestCase(new Rectangle(20, 2, 40, 4), new Rectangle(10, 1, 0, 1), false,
-                0, -1);
-            for (var x = -1; x <= 1; x++)
-                for (var y = -1; y <= 1; y++)
-                    if (10 * x + y != 0)
-                        yield return new RectanglesTestRoomTestCase(new Rectangle(0, 0, 10, 10),
-                            new Rectangle(20 * y, 20 * x, 10, 10), false, 0, -1);
-            for (var x = -1; x <= 1; x++)
-                for (var y = -1; y <= 1; y++)
-                    if (10 * x + y != 0)
-                        yield return new RectanglesTestRoomTestCase(new Rectangle(0, 0, 30, 30),
-                            new Rectangle(20 * y, 20 * x, 30, 30), true, x * y == 0 ? 300 : 100, -1);
-            for (var x = -1; x <= 1; x++)
-                for (var y = -1; y <= 1; y++)
-                    if (10 * x + y != 0)
-                        yield return new RectanglesTestRoomTestCase(new Rectangle(-40, -40, 110, 110),
-                            new Rectangle(30 * y, 30 * x, 30, 30), true, 900, 1);
-            for (var x = -1; x <= 1; x++)
-                for (var y = -1; y <= 1; y++)
-                    if (10 * x + y != 0)
-                        yield return new RectanglesTestRoomTestCase(new Rectangle(30 * y, 30 * x, 30, 30),
-                            new Rectangle(-40, -40, 110, 110), true, 900, 0);
-            for (var x = -1; x <= 1; x++)
-                for (var y = -1; y <= 1; y++)
-                    if (10 * x + y != 0)
-                    {
-                        yield return new RectanglesTestRoomTestCase(new Rectangle(0, 0, 20, 20),
-                            new Rectangle(20 * x, 20 * y, 20, 20), true, 0, -1);
-                        yield return new RectanglesTestRoomTestCase(new Rectangle(20 * x, 20 * y, 20, 20),
-                            new Rectangle(0, 0, 20, 20), true, 0, -1);
-                    }
+            x = x0;
+            y = y0;
+        }
+
+        public static void Go(double length, double angle)
+        {
+            //Делает шаг длиной L в направлении angle и рисует пройденную траекторию
+            var x1 = (float)(x + length * Math.Cos(angle));
+            var y1 = (float)(y + length * Math.Sin(angle));
+            graphics.DrawLine(Pens.Yellow, x, y, x1, y1);
+            x = x1;
+            y = y1;
+        }
+
+        public static void ShowResult()
+        {
+            image.Save("result.bmp");
+            Process.Start("result.bmp");
         }
     }
 
-    public class RectanglesTestRoomTestCase : TestCase
+    public class StrangeThing
     {
-        private readonly int indexOfInnerRectangle;
-        private readonly bool intersected;
-        private readonly int intersectionSquare;
-        private readonly Rectangle r1;
-        private readonly Rectangle r2;
-        private int indexOfInnerRectAnswer;
-        private bool intersectedAnswer;
-        private int intersectionSquareAnswer;
+        static double Length = 100;
+        static double Width = 10;
+        static double Num = 4;
 
-        public RectanglesTestRoomTestCase(Rectangle r1, Rectangle r2, bool intersected, int intersectionSquare,
-            int indexOfInnerRectangle) : base("Rectangles")
+        /// <summary>
+        /// рисует одну часть невозможного квадрата
+        /// </summary>
+        /// <param name="x0">начальная координата x</param>
+        /// <param name="y0">начальная координата Y</param>
+        /// <param name="angle">угол направления части</param>
+        static void DrowPart(double x0, double y0, double angle)
         {
-            this.r1 = r1;
-            this.r2 = r2;
-            this.intersected = intersected;
-            this.intersectionSquare = intersectionSquare;
-            this.indexOfInnerRectangle = indexOfInnerRectangle;
+            Risovatel.SetPos((float)x0, (float)y0);
+            Risovatel.Go(Length, angle);
+            Risovatel.Go(Width * Math.Sqrt(2),angle + Math.PI / 4);
+            Risovatel.Go(Length, angle + Math.PI);
+            Risovatel.Go(Length - Width, angle + 2 * Math.PI / Num);
         }
-
-        protected override void InternalVisualize(TestCaseUI ui)
+        public static void Main()
         {
-            ui.Rect(new System.Drawing.Rectangle(r1.Left, r1.Top, r1.Width, r1.Height), neutralPen);
-            ui.Rect(new System.Drawing.Rectangle(r2.Left, r2.Top, r2.Width, r2.Height), neutralPen);
-            ui.Log("r1: {0}", r1);
-            ui.Log("r2: {0}", r2);
-            ui.Log("Solution: ");
-            ui.Log("  intersected: {0} {1}", intersectedAnswer, intersected != intersectedAnswer ? "wrong!" : "");
-            ui.Log("  intersection square: {0} {1}", intersectionSquareAnswer,
-                intersectionSquare != intersectionSquareAnswer ? "wrong!" : "");
-            ui.Log("  index of inner rectangle: {0} {1}", indexOfInnerRectAnswer,
-                indexOfInnerRectangle != indexOfInnerRectAnswer ? "wrong!" : "");
-        }
+            Risovatel.Initialize();
 
-        protected override bool InternalRun()
-        {
-            intersectedAnswer = RectanglesTask.AreIntersected(r1, r2);
-            intersectionSquareAnswer = RectanglesTask.IntersectionSquare(r1, r2);
-            indexOfInnerRectAnswer = RectanglesTask.IndexOfInnerRectangle(r1, r2);
-            return intersected == intersectedAnswer && intersectionSquare == intersectionSquareAnswer &&
-                   indexOfInnerRectangle == indexOfInnerRectAnswer;
+            //рисует первую часть
+            StrangeThing.DrowPart(Width, 0, 0);
+            //рисует вторую часть
+            StrangeThing.DrowPart(Length + 2 * Width, Width, 2* Math.PI / Num);
+            //рисует третью часть
+            StrangeThing.DrowPart(Length + Width, Length + 2 * Width, 4 * Math.PI / Num);
+            //рисует четвёртую часть
+            StrangeThing.DrowPart(0, Length + Width, 6 * Math.PI / Num);
+
+            Risovatel.ShowResult();
         }
     }
 }
