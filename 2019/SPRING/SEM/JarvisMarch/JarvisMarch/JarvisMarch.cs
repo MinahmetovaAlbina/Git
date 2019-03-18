@@ -28,7 +28,7 @@ namespace JarvisMarch
         }
 
         //самая левая из самых нижних точек
-        public Point FindFirstPoint(IEnumerable<Point> points, ref int iterations)
+        private Point FindFirstPoint(IEnumerable<Point> points, ref int iterations)
         {
             if (points == null || points.Count() == 0) throw new InvalidOperationException();
             var firstPoint = points.First();
@@ -41,7 +41,7 @@ namespace JarvisMarch
             return firstPoint;
         }
 
-        public Point FindNextPoint(IEnumerable<Point> points, Point point, Point prevPoint, ref int iterations)
+        private Point FindNextPoint(IEnumerable<Point> points, Point point, Point prevPoint, ref int iterations)
         {
             var nextPoint = prevPoint;
             var cos = 2.0;
@@ -63,7 +63,7 @@ namespace JarvisMarch
             return nextPoint;
         }
 
-        public Point FindNextPoint(IEnumerable<Point> points, Point point, ref int iterations)
+        private Point FindNextPoint(IEnumerable<Point> points, Point point, ref int iterations)
         {
             return FindNextPoint(points, point, new Point(point.X - 1, point.Y), ref iterations);
         }

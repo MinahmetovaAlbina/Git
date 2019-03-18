@@ -1,4 +1,0 @@
-D:\vs\JarvisMarch\JarvisMarchOnLincedList.Test\obj\Debug\netcoreapp2.1\JarvisMarchOnLincedList.Test.csprojAssemblyReference.cache
-D:\vs\JarvisMarch\JarvisMarchOnLincedList.Test\obj\Debug\netcoreapp2.1\JarvisMarchOnLincedList.Test.csproj.CoreCompileInputs.cache
-D:\vs\JarvisMarch\JarvisMarchOnLincedList.Test\obj\Debug\netcoreapp2.1\JarvisMarchOnLincedList.Test.AssemblyInfoInputs.cache
-D:\vs\JarvisMarch\JarvisMarchOnLincedList.Test\obj\Debug\netcoreapp2.1\JarvisMarchOnLincedList.Test.AssemblyInfo.cs
