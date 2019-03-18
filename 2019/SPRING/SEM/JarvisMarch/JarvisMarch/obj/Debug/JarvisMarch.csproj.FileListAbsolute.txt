@@ -1,0 +1,9 @@
+D:\vs\JarvisMarch\JarvisMarch\obj\Debug\JarvisMarch.csprojAssemblyReference.cache
+D:\vs\JarvisMarch\JarvisMarch\obj\Debug\JarvisMarch.csproj.CoreCompileInputs.cache
+D:\vs\JarvisMarch\JarvisMarch\bin\Debug\JarvisMarch.exe.config
+D:\vs\JarvisMarch\JarvisMarch\bin\Debug\JarvisMarch.exe
+D:\vs\JarvisMarch\JarvisMarch\bin\Debug\JarvisMarch.pdb
+D:\vs\JarvisMarch\JarvisMarch\obj\Debug\JarvisMarch.exe
+D:\vs\JarvisMarch\JarvisMarch\obj\Debug\JarvisMarch.pdb
+D:\vs\JarvisMarch\JarvisMarch\bin\Debug\ZedGraph.dll
+D:\vs\JarvisMarch\JarvisMarch\obj\Debug\JarvisMarch.csproj.CopyComplete
